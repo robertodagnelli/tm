@@ -1,0 +1,114 @@
+﻿sudo apt-get update
+sudo apt update
+
+INSTALL DOCKER:
+sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io
+----------------
+INSTALL DOCKER COMPOSE
+sudo apt install -y curl
+sudo curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+docker–compose –version
+
+----------------------------
+
+INSTALL PHP 7.4 (FOR UBUNTU 18.04)
+sudo apt-get update
+sudo apt -y install software-properties-common
+sudo add-apt-repository ppa:ondrej/php
+sudo apt-get update
+
+sudo apt -y install php7.4
+php -v
+
+--no (non trova alcuni)
+sudo apt-get install -y php7.4-{bcmath,ctype,curl,dom,gd,hash,iconv,intl,mbstring,openssl,pdo_mysql,simplexml,soap,xsl,zip,sockets,xml}
+
+sudo apt-get install -y php7.4-{bcmath,ctype,curl,dom,gd,iconv,intl,mbstring,simplexml,soap,xsl,zip,sockets,xml}
+
+wget https://www.robertodagnelli.altervista.org/magento.zip
+
+sudo apt-get install unzip
+
+unzip magento.zip
+
+------------------------------
+in docker-compose.yml mettere: WEB_ALIAS_DOMAIN=<indirizzo ip> e - ./:/magento 
+PHP_MEMORY_LIMIT=-1
+
+sudo service apache2 stop 
+
+sudo docker-compose up -d
+-----------------------------
+
+sudo fallocate -l 3G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+sudo sysctl vm.swappiness=10
+add at the end of   >sudo nano /etc/sysctl.conf    vm.swappiness=10
+
+echo 'memory_limit = -1' >> /usr/local/etc/php/conf.d/docker-php-memlimit.ini
+
+entrare nel container magento-web usando
+docker exec -it -u 0 magento-web /bin/bash
+
+(nel container) chmod 777 /
+
+cd /magento
+
+
+php bin/magento setup:install --base-url="http://robertod.germanywestcentral.cloudapp.azure.com/" --db-host="magento-db" --db-name="magento" --db-user="root" --db-password="root" --admin-firstname="admin" --admin-lastname="admin" --admin-email="roberto.dagnelli@gmail.com" --admin-user="admin" --admin-password="admin123" --backend-frontname="admin" --language="it_IT" --currency="EUR" --timezone="Europe/Brussels" --use-rewrites="1" --elasticsearch-host="magento-elasticsearch"
+
+php bin/magento setup:install --base-url="http://robertod.southcentralus.cloudapp.azure.com/" --db-host="magento-db" --db-name="magento" --db-user="root" --db-password="root" --admin-firstname="admin" --admin-lastname="admin" --admin-email="roberto.dagnelli@gmail.com" --admin-user="admin" --admin-password="admin123" --backend-frontname="admin" --language="it_IT" --currency="EUR" --timezone="Europe/Brussels" --use-rewrites="1" --elasticsearch-host="magento-elasticsearch"
+
+-----------------------------
+magento marketplace account: roberto.dagnelli@gmail.com  P__3
+access_keys	
+Public Key: c74c53ebfa0a83c3e83d20fe5f23c640 (Username)
+Private Key: 035dfd7f443a305101def9e688ade0ce (Password)
+-----------------------------
+
+php bin/magento sampledata:deploy
+php bin/magento setup:upgrade
+
+php bin/magento module:disable Magento_TwoFactorAuth
+
+chown -R www-data:www-data /var/www/magento2/ 
+chmod 777 -R var
+chmod 777 -R generated
+chmod 777 -R app/etc
+rm -rf var/cache/* var/page_cache/* var/generation/*
+
+php bin/magento setup:di:compile;
+
+bin/magento catalog:images:resize
+
+---------------------
+Se il container magento-web non si avvia e restarta sempre:
+docker-compose down
+docker-compose up -d --build
+
+-------------------------
+Reindex per problemi con le categorie
+php bin/magento indexer:reindex (ne container magento-web)
+
+----------------------
+Fix session expired add to cart (mi sa che non funziona)
+php bin/magento config:set admin/security/session_lifetime 86400 && php bin/magento cache:flush (nel container magento-web)
