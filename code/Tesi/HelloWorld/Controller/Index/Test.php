@@ -16,7 +16,7 @@ class Test extends \Magento\Framework\App\Action\Action
 	public function execute()
 	{
 		echo "Hello World";
-    $out = call();
+    $out = $this->call();
     echo "Result: ";
     echo $out;
 		exit;
