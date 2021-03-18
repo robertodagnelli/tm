@@ -48,10 +48,10 @@ sudo apt-get install unzip
 unzip magento.zip
 
 ------------------------------
-in docker-compose.yml mettere: WEB_ALIAS_DOMAIN=<indirizzo ip> e - ./:/magento 
+in docker-compose.yml mettere: WEB_ALIAS_DOMAIN=<indirizzo ip> e - ./:/magento
 PHP_MEMORY_LIMIT=-1
 
-sudo service apache2 stop 
+sudo service apache2 stop
 
 sudo docker-compose up -d
 -----------------------------
@@ -80,7 +80,7 @@ php bin/magento setup:install --base-url="http://robertod.southcentralus.cloudap
 
 -----------------------------
 magento marketplace account: roberto.dagnelli@gmail.com  P__3
-access_keys	
+access_keys
 Public Key: c74c53ebfa0a83c3e83d20fe5f23c640 (Username)
 Private Key: 035dfd7f443a305101def9e688ade0ce (Password)
 -----------------------------
@@ -90,7 +90,7 @@ php bin/magento setup:upgrade
 
 php bin/magento module:disable Magento_TwoFactorAuth
 
-chown -R www-data:www-data /var/www/magento2/ 
+chown -R www-data:www-data /var/www/magento2/
 chmod 777 -R var
 chmod 777 -R generated
 chmod 777 -R app/etc
@@ -107,7 +107,7 @@ docker-compose up -d --build
 
 -------------------------
 Reindex per problemi con le categorie
-php bin/magento indexer:reindex (ne container magento-web)
+php bin/magento indexer:reindex (nel container magento-web)
 
 ----------------------
 Fix session expired add to cart (mi sa che non funziona)
