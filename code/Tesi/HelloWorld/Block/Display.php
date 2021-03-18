@@ -12,3 +12,4 @@ class Display extends \Magento\Framework\View\Element\Template
 		return __('Hello World From Block Display.php');
 	}
 }
+?>

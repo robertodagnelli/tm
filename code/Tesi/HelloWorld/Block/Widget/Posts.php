@@ -9,3 +9,5 @@ class Posts extends Template implements BlockInterface {
 	protected $_template = "widget/posts.phtml";
 
 }
+
+?>

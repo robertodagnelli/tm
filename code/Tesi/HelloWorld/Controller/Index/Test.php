@@ -42,3 +42,4 @@ class Test extends \Magento\Framework\App\Action\Action
     return $output;
   }
 }
+?>
