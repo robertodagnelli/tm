@@ -1,3 +1,3 @@
 <?php
-  echo "Hello, I am Sample Service!";
- ?>
+  echo "<h1>Hello, I am Sample Service!</h1>";
+?>
