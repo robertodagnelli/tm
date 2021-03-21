@@ -69,7 +69,7 @@ echo 'memory_limit = -1' >> /usr/local/etc/php/conf.d/docker-php-memlimit.ini
 entrare nel container magento-web usando
 docker exec -it -u 0 magento-web /bin/bash
 
-(nel container) chmod 777 /
+(nel container) chmod -R 777 / 
 
 cd /magento
 
@@ -112,3 +112,13 @@ php bin/magento indexer:reindex (nel container magento-web)
 ----------------------
 Fix session expired add to cart (mi sa che non funziona)
 php bin/magento config:set admin/security/session_lifetime 86400 && php bin/magento cache:flush (nel container magento-web)
+
+-----------------------
+Stop the container(s) using the following command:
+docker-compose down
+Delete all containers using the following command:
+docker rm -f $(docker ps -a -q)
+Delete all volumes using the following command:
+docker volume rm $(docker volume ls -q)
+docker rmi $(docker images -a -q)
+docker system prune -f -a --volumes
