@@ -20,7 +20,7 @@ services:
         volumes:
           - ./sampleservice:/sampleservice
         ports:
-          - "81:81"
+          - "9000:80"
         networks:
           - magento-backend
     web:
