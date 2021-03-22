@@ -11,7 +11,6 @@ class Display extends \Magento\Framework\View\Element\Template
 	{
 		$url = "http://robertod.germanywestcentral.cloudapp.azure.com:9000/sample-api.php";
 		$out = $this->call();
-		echo $out;
 		return $out;
 	}
 
