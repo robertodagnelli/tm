@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
-          <css src="https://http://robertod.germanywestcentral.cloudapp.azure.com:9000/chatbotstyle.css"  src_type="url" rel="stylesheet" type="text/css"  />
+          <css src="http://robertod.germanywestcentral.cloudapp.azure.com:9000/chatbotstyle.css"  src_type="url" rel="stylesheet" type="text/css"  />
     </head>
     <referenceContainer name="content">
         <block class="Tesi\SampleService\Block\Display" name="sampleservice_display" template="Tesi_SampleService::sampleservice.phtml" />
