@@ -10,7 +10,7 @@ class Display extends \Magento\Framework\View\Element\Template
 	public function render()
 	{
 		$url = "http://robertod.germanywestcentral.cloudapp.azure.com:9000/sample-api.php";
-		$out = $this->call();
+		$out = $this->call($url);
 		return $out;
 	}
 
