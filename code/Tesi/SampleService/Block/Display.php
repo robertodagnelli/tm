@@ -9,7 +9,30 @@ class Display extends \Magento\Framework\View\Element\Template
 
 	public function render()
 	{
-		return __('Hello World From Block Display.php');
+		$url = "http://robertod.germanywestcentral.cloudapp.azure.com:9000/sample-api.php";
+		$out = $this->call();
+		echo $out;
+		return $out;
 	}
+
+
+	  public function call($url)
+	  {
+	    $ch = curl_init();
+
+	    // set url
+	    curl_setopt($ch, CURLOPT_URL, $url);
+
+	    //return the transfer as a string
+	    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+	    // $output contains the output string
+	    $output = curl_exec($ch);
+
+	    // close curl resource to free up system resources
+	    curl_close($ch);
+
+	    return $output;
+	  }
 }
 ?>
